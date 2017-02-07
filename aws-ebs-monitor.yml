@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+  tasks: 
+  - shell: aws ec2 describe-volume-status --volume-ids {{ item }}
+    with_items:
+    - "{{ instance1 }}"
+    - "{{ instance2 }}"
+    - "{{ instance3 }}"
+    - "{{ instance4 }}"
+    - "{{ instance5 }}"
+    failed_when: " 'end of statement block' in item "
+    register: op
+    ignore_errors: true
+  - debug: var=op
